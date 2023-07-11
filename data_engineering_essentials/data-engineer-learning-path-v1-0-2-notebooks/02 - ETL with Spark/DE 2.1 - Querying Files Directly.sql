@@ -204,7 +204,7 @@ SELECT * FROM cte_json
 
 -- COMMAND ----------
 
-SELECT * FROM text.`${DA.paths.kafka_events}`
+SELECT * FROM text.`${DA.paths.kafka_events}`   
 
 -- COMMAND ----------
 

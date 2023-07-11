@@ -96,7 +96,15 @@ SELECT * FROM csv.`${DA.paths.sales_csv}`
 -- COMMAND ----------
 
 CREATE TABLE IF NOT EXISTS sales_csv
-  (order_id LONG, email STRING, transactions_timestamp LONG, total_item_quantity INTEGER, purchase_revenue_in_usd DOUBLE, unique_items INTEGER, items STRING)
+  (
+    order_id LONG
+    , email STRING
+    , transactions_timestamp LONG
+    , total_item_quantity INTEGER
+    , purchase_revenue_in_usd DOUBLE
+    , unique_items INTEGER
+    , items STRING
+  )
 USING CSV
 OPTIONS (
   header = "true",

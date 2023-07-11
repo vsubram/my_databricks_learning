@@ -60,7 +60,12 @@
 
 -- COMMAND ----------
 
-SELECT count(*), count(user_id), count(user_first_touch_timestamp), count(email), count(updated)
+SELECT 
+  count(*)
+  , count(user_id)
+  , count(user_first_touch_timestamp)
+  , count(email)
+  , count(updated)
 FROM users_dirty
 
 -- COMMAND ----------
@@ -81,7 +86,7 @@ FROM users_dirty
 
 -- COMMAND ----------
 
-SELECT count_if(email IS NULL) FROM users_dirty;
+-- SELECT count_if(email IS NULL) FROM users_dirty;
 SELECT count(*) FROM users_dirty WHERE email IS NULL;
 
 -- COMMAND ----------
@@ -129,8 +134,11 @@ SELECT user_id, user_first_touch_timestamp, max(email) AS email, max(updated) AS
 FROM users_dirty
 WHERE user_id IS NOT NULL
 GROUP BY user_id, user_first_touch_timestamp;
-
 SELECT count(*) FROM deduped_users
+
+-- COMMAND ----------
+
+SELECT * FROM deduped_users LIMIT 10
 
 -- COMMAND ----------
 
@@ -249,19 +257,7 @@ FROM (
 -- MAGIC
 -- MAGIC display(dedupedDF
 -- MAGIC     .withColumn("first_touch", (col("user_first_touch_timestamp") / 1e6).cast("timestamp"))
--- MAGIC     .withColumn("first_touch_date", date_format("first_touch", "MMM d, yyyy"))
--- MAGIC     .withColumn("first_touch_time", date_format("first_touch", "HH:mm:ss"))
--- MAGIC     .withColumn("email_domain", regexp_extract("email", "(?<=@).+", 0))
--- MAGIC )
-
--- COMMAND ----------
-
--- MAGIC %python
--- MAGIC from pyspark.sql.functions import date_format, regexp_extract
--- MAGIC
--- MAGIC display(dedupedDF
--- MAGIC     .withColumn("first_touch", (col("user_first_touch_timestamp") / 1e6).cast("timestamp"))
--- MAGIC     .withColumn("first_touch_date", date_format("first_touch", "MMM d, yyyy"))
+-- MAGIC     .withColumn("first_touch_date", date_format("first_touch", "MMM dd, yyyy"))
 -- MAGIC     .withColumn("first_touch_time", date_format("first_touch", "HH:mm:ss"))
 -- MAGIC     .withColumn("email_domain", regexp_extract("email", "(?<=@).+", 0))
 -- MAGIC )
